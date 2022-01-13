@@ -26,6 +26,8 @@ export interface RelationProperties {
   name: string;
   targetKey: string;
   foreignKey: string;
+  sourceKey: string;
+  relationName: string;
 }
 
 export interface ScalarProperties {

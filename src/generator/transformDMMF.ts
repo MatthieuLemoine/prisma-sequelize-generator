@@ -45,6 +45,7 @@ export function transformDMMF(dmmf: DMMF.Document) {
     name: 'type',
     targetKey: 'relationToFields[0]',
     foreignKey: 'relationFromFields[0]',
+    relationName: 'relationName',
   });
 
   const modelMorphism = morphism<Schema<ModelProperties, DMMF.Model>>({
@@ -98,6 +99,23 @@ export function transformDMMF(dmmf: DMMF.Document) {
   const transformMorphism = morphism<Schema<{ models: ModelProperties[] }, DMMF.Datamodel>>({
     models: { path: 'models', fn: modelMorphism },
   });
-
-  return transformMorphism(dmmf.datamodel);
+  const transformed = transformMorphism(dmmf.datamodel);
+  // Link invertible hasMany/belongsTo relations
+  for (const model of transformed.models) {
+    for (const hasManyField of model.hasManyFields) {
+      const { relationName } = hasManyField;
+      const inversedRelation = transformed.models.reduce((found: RelationProperties | null, model) => {
+        const match = model.belongsToFields.find((belongsToField) => belongsToField.relationName === relationName);
+        if (match) {
+          return match;
+        }
+        return found;
+      }, null);
+      if (inversedRelation) {
+        hasManyField.foreignKey = inversedRelation.foreignKey;
+        hasManyField.sourceKey = inversedRelation.targetKey;
+      }
+    }
+  }
+  return transformed;
 }

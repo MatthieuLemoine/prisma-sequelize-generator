@@ -34,7 +34,7 @@ export class {{modelName}} extends Model {
     this.belongsTo(models.{{name}}, { as: '{{as}}', targetKey: '{{targetKey}}', foreignKey: '{{foreignKey}}' });
   {{/each}}
   {{#each hasManyFields}}
-    this.hasMany(models.{{name}}, { as: '{{as}}' });
+    this.hasMany(models.{{name}}, { as: '{{as}}', sourceKey: '{{sourceKey}}', foreignKey: '{{foreignKey}}' });
   {{/each}}
   {{#each hasOneFields}}
     this.hasOne(models.{{name}}, { as: '{{as}}' });
