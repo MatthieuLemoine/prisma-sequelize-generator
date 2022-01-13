@@ -1,5 +1,5 @@
 import { generatorHandler } from '@prisma/generator-helper';
-import { getEnvPaths, parseEnvValue } from '@prisma/sdk';
+import { parseEnvValue } from '@prisma/sdk';
 import nodePlop from 'node-plop';
 import * as path from 'path';
 import { mergeRight, prop } from 'ramda';
@@ -50,20 +50,7 @@ generatorHandler({
       const indexGenerator = plop.getGenerator('index');
       const modelGenerator = plop.getGenerator('Model');
 
-      const schemaDir = options.schemaPath ? path.dirname(options.schemaPath) : process.cwd();
-      const schemaPath = path.join(schemaDir, 'prisma.schema');
-      const envPaths = getEnvPaths(schemaPath, { cwd: outputDir });
-
       const config = {
-        generator: options.generator,
-        relativeEnvPaths: {
-          rootEnvPath: envPaths.rootEnvPath && path.relative(outputDir, envPaths.rootEnvPath),
-          schemaEnvPath: envPaths.schemaEnvPath && path.relative(outputDir, envPaths.schemaEnvPath),
-        },
-        // relativePath: path.relative(outputDir, schemaDir),
-        // clientVersion: pkg.version,
-        // engineVersion: options.version,
-        // datasourceNames: options.datasources.map((d) => d.name),
         datasource: options.datasources[0],
       };
       // const relativeOutputDir = path.relative(process.cwd(), outputDir);

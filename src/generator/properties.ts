@@ -6,6 +6,7 @@ export const PrismaTypeToSequelizeType: Record<string, string> = {
   Boolean: 'BOOLEAN',
   DateTime: 'DATE',
   Json: 'JSONB',
+  BigInt: 'BIGINT',
 };
 
 export interface ModelProperties {
@@ -37,4 +38,6 @@ export interface ScalarProperties {
   type: string;
   allowNull: boolean;
   isAutoincrement: boolean;
+  isUuid: boolean;
+  isNow: boolean;
 }

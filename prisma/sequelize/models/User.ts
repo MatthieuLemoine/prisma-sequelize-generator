@@ -40,6 +40,15 @@ export class User extends Model {
           type: DataTypes.JSONB,
           allowNull: false,
         },
+        amount: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+        },
+        uid: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          defaultValue: DataTypes.UUIDV4,
+        },
       },
       {
         sequelize,

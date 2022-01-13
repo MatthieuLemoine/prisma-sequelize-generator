@@ -1,6 +1,6 @@
 {
-  "name": "prisma-sequelize-generator",
-  "version": "1.0.0-beta.5",
+  "name": "@matthieulemoine/prisma-sequelize-generator",
+  "version": "1.0.0",
   "main": "dist/cli.js",
   "license": "MIT",
   "files": [
@@ -20,12 +20,12 @@
     "code-generation",
     "sequelize"
   ],
-  "homepage": "https://github.com/floydspace/prisma-sequelize-generator",
+  "homepage": "https://github.com/MatthieuLemoine/prisma-sequelize-generator",
   "repository": {
-    "url": "https://github.com/floydspace/prisma-sequelize-generator.git"
+    "url": "https://github.com/MatthieuLemoine/prisma-sequelize-generator.git"
   },
   "bugs": {
-    "url": "https://github.com/floydspace/prisma-sequelize-generator/issues"
+    "url": "https://github.com/MatthieuLemoine/prisma-sequelize-generator/issues"
   },
   "dependencies": {
     "@prisma/generator-helper": "^2.29.1",

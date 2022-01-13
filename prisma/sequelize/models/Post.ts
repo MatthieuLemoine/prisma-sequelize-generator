@@ -13,6 +13,15 @@ export class Post extends Model {
         userId: {
           type: DataTypes.INTEGER,
         },
+        number: {
+          type: DataTypes.STRING,
+          unique: true,
+        },
+        date: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        },
       },
       {
         sequelize,

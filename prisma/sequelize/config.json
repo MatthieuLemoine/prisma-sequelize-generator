@@ -1,24 +1,4 @@
 {
-  "generator": {
-    "name": "models",
-    "provider": {
-      "fromEnvVar": null,
-      "value": "node ./dist/cli.js"
-    },
-    "output": {
-      "value": "/Users/victor/Projects/_own/prisma-sequelize-generator/prisma/sequelize",
-      "fromEnvVar": "null"
-    },
-    "config": {
-      "outputFormat": "typescript"
-    },
-    "binaryTargets": [],
-    "previewFeatures": []
-  },
-  "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
-    "schemaEnvPath": "../../.env"
-  },
   "datasource": {
     "name": "db",
     "provider": "postgresql",

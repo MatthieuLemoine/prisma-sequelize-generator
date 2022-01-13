@@ -17,7 +17,10 @@ export function transformDMMF(dmmf: DMMF.Document) {
   const scalarSchema = createSchema<ScalarProperties, DMMF.Field>(
     {
       isList: 'isList',
-      hasDefaultValue: 'hasDefaultValue',
+      hasDefaultValue: R.allPass([
+        R.prop('hasDefaultValue'),
+        R.compose(R.not, R.pathEq(['default', 'name'], 'dbgenerated')),
+      ]),
       default: 'default',
       isId: 'isId',
       isUnique: 'isUnique',
@@ -26,8 +29,13 @@ export function transformDMMF(dmmf: DMMF.Document) {
         field.kind === 'scalar'
           ? R.prop(field.type, PrismaTypeToSequelizeType)
           : enumValuesToString(R.prop(field.type, enumIndex)),
-      allowNull: { path: 'isRequired', fn: R.not },
+      allowNull: R.anyPass([
+        R.compose(R.not, R.prop('isRequired')),
+        R.compose(R.pathEq(['default', 'name'], 'dbgenerated')),
+      ]),
       isAutoincrement: R.allPass([R.prop('hasDefaultValue'), R.pathEq(['default', 'name'], 'autoincrement')]),
+      isUuid: R.allPass([R.prop('hasDefaultValue'), R.pathEq(['default', 'name'], 'uuid')]),
+      isNow: R.allPass([R.prop('hasDefaultValue'), R.pathEq(['default', 'name'], 'now')]),
     },
     { undefinedValues: { strip: true } }
   );
