@@ -31,7 +31,6 @@ describe('given prisma-sequelize-generator,', () => {
     const expectedDir = path.join(mockDir, 'sequelize');
     expect(fs.existsSync(expectedDir)).toBe(true);
     expect(fs.existsSync(path.join(expectedDir, 'index.ts'))).toBe(true);
-    expect(fs.existsSync(path.join(expectedDir, 'config.json'))).toBe(true);
     expect(fs.existsSync(path.join(expectedDir, 'models', 'index.ts'))).toBe(true);
     expect(fs.existsSync(path.join(expectedDir, 'models', 'Post.ts'))).toBe(true);
     expect(fs.existsSync(path.join(expectedDir, 'models', 'User.ts'))).toBe(true);

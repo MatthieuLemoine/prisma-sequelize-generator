@@ -1,11 +1,8 @@
 import { Options, Sequelize } from 'sequelize';
 import { mergeDeepRight } from 'ramda';
-import path from 'path';
 
-import config from './config.json';
 import * as models from './models';
 
-const env = process.env;
 const databaseUrl = process.env.DATABASE_URL;
 
 export const createSequelizeInstance = (options?: Options) => {

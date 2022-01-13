@@ -41,11 +41,6 @@ module.exports = function (plop) {
         path: 'index.{{outputFormat}}',
         templateFile: path.join(__dirname, './{{outputFormat}}/index.hbs'),
       },
-      {
-        type: 'add',
-        path: 'config.json',
-        template: '{{{config}}}',
-      },
     ],
   });
 
