@@ -61,8 +61,16 @@ export class User extends Model {
   }
 
   static associate(models: Record<string, ModelCtor<Model>>) {
-    this.belongsTo(models.User, { as: 'successor', targetKey: 'id', foreignKey: 'successorId' });
-    this.hasMany(models.Post, { as: 'posts', sourceKey: 'id', foreignKey: 'userId' });
+    this.belongsTo(models.User, {
+      as: 'successor',
+      targetKey: 'id',
+      foreignKey: 'successorId',
+    });
+    this.hasMany(models.Post, {
+      as: 'posts',
+      sourceKey: 'id',
+      foreignKey: 'userId',
+    });
     this.hasOne(models.User, { as: 'predecessor' });
   }
 }
