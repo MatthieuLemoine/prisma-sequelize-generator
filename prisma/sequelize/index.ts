@@ -1,9 +1,8 @@
 import { Options, Sequelize } from 'sequelize';
 import { mergeDeepRight } from 'ramda';
+import { getDatabaseUrl } from '@daas/common';
 
 import * as models from './models';
-
-const databaseUrl = process.env.DATABASE_URL;
 
 export const createSequelizeInstance = (options?: Options) => {
   const withDefaults = mergeDeepRight({
@@ -12,6 +11,7 @@ export const createSequelizeInstance = (options?: Options) => {
     },
   });
 
+  const databaseUrl = await getDatabaseUrl();
   const sequelize = new Sequelize(databaseUrl, withDefaults(options ?? {}));
 
   // First initialize all models
