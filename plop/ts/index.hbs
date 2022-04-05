@@ -4,7 +4,7 @@ import { getDatabaseUrl } from '@daas/common';
 
 import * as models from './models';
 
-export const createSequelizeInstance = (options?: Options) => {
+export const createSequelizeInstance = async (options?: Options) => {
   const withDefaults = mergeDeepRight({
     define: {
       freezeTableName: true,
