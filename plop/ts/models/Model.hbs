@@ -28,7 +28,7 @@ export class {{modelName}} extends Model {
     );
   }
 
-  {{#if (or belongsToFields (or hasManyFields hasOneFields))}}
+  {{#if (or belongsToFields.length (or hasManyFields.length hasOneFields.length))}}
   static associate(models: Record<string, ModelCtor<Model>>) {
   {{#each belongsToFields}}
     this.belongsTo(models.{{name}}, { as: '{{as}}', targetKey: '{{targetKey}}', foreignKey: '{{foreignKey}}' });
