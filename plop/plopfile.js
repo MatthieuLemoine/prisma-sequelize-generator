@@ -40,11 +40,6 @@ module.exports = function (plop) {
         path: 'models/index.{{outputFormat}}',
         templateFile: path.join(__dirname, './{{outputFormat}}/models/index.hbs'),
       },
-      {
-        type: 'prettier-add',
-        path: 'index.{{outputFormat}}',
-        templateFile: path.join(__dirname, './{{outputFormat}}/index.hbs'),
-      },
     ],
   });
 

@@ -12,7 +12,7 @@ export const createSequelizeInstance = async (options?: Options) => {
   });
 
   const databaseUrl = await getDatabaseUrl();
-  const sequelize = new Sequelize(databaseUrl, withDefaults(options ?? {}));
+  const sequelize = new Sequelize(databaseUrl.split('?')[0], withDefaults(options ?? {}));
 
   // First initialize all models
   Object.keys(models).forEach((model) => {
