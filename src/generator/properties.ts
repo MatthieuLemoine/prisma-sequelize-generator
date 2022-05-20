@@ -16,6 +16,7 @@ export interface ModelProperties {
   belongsToFields: RelationProperties[];
   hasOneFields: RelationProperties[];
   hasManyFields: RelationProperties[];
+  belongsToManyFields: RelationProperties[];
   hasCreatedAt: boolean;
   hasUpdatedAt: boolean;
   hasDeletedAt: boolean;
@@ -28,6 +29,7 @@ export interface RelationProperties {
   foreignKey: string;
   sourceKey: string;
   relationName: string;
+  through?: string;
 }
 
 export interface ScalarProperties {

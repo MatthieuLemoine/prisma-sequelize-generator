@@ -100,22 +100,50 @@ export function transformDMMF(dmmf: DMMF.Document) {
     models: { path: 'models', fn: modelMorphism },
   });
   const transformed = transformMorphism(dmmf.datamodel);
-  // Link invertible hasMany/belongsTo relations
+  const hasManyRelationsToRemove = [];
+  let modelIndex = 0;
   for (const model of transformed.models) {
+    let index = 0;
     for (const hasManyField of model.hasManyFields) {
       const { relationName } = hasManyField;
-      const inversedRelation = transformed.models.reduce((found: RelationProperties | null, model) => {
-        const match = model.belongsToFields.find((belongsToField) => belongsToField.relationName === relationName);
+      // Look for many-to-many relations
+      const relations = transformed.models.reduce((found: RelationProperties[], model) => {
+        const match = model.hasManyFields.find((hasManyField) => hasManyField.relationName === relationName);
         if (match) {
-          return match;
+          return [...found, match];
         }
         return found;
-      }, null);
-      if (inversedRelation) {
-        hasManyField.foreignKey = inversedRelation.foreignKey;
-        hasManyField.sourceKey = inversedRelation.targetKey;
+      }, []);
+      // Many-to-many relation
+      if (relations && relations.length === 2) {
+        model.belongsToManyFields = [
+          ...(model.belongsToManyFields || []),
+          {
+            ...hasManyField,
+            through: `_${relationName}`,
+          },
+        ];
+        hasManyRelationsToRemove.push([modelIndex, index]);
+      } else {
+        // Link invertible hasMany/belongsTo relations
+        const inversedRelation = transformed.models.reduce((found: RelationProperties | null, model) => {
+          const match = model.belongsToFields.find((belongsToField) => belongsToField.relationName === relationName);
+          if (match) {
+            return match;
+          }
+          return found;
+        }, null);
+        if (inversedRelation) {
+          hasManyField.foreignKey = inversedRelation.foreignKey;
+          hasManyField.sourceKey = inversedRelation.targetKey;
+        }
       }
+      index++;
     }
+    modelIndex++;
+  }
+  for (const relationToRemove of hasManyRelationsToRemove) {
+    transformed.models[relationToRemove[0]].hasManyFields.splice(relationToRemove[1], 1);
   }
   return transformed;
 }
