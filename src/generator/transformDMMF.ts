@@ -116,14 +116,33 @@ export function transformDMMF(dmmf: DMMF.Document) {
       }, []);
       // Many-to-many relation
       if (relations && relations.length === 2) {
+        const joinTableName = `_${relationName}`;
         model.belongsToManyFields = [
           ...(model.belongsToManyFields || []),
           {
             ...hasManyField,
-            through: `_${relationName}`,
+            through: joinTableName,
+            foreignKey:
+              hasManyField.foreignKey || relationName.split('To').findIndex((n) => n === model.modelName) === 0
+                ? 'A'
+                : 'B',
           },
         ];
         hasManyRelationsToRemove.push([modelIndex, index]);
+        if (!transformed.models.find((m) => m.modelName === joinTableName)) {
+          transformed.models.push({
+            modelName: joinTableName,
+            dbName: joinTableName,
+            scalarFields: [],
+            belongsToFields: [],
+            hasOneFields: [],
+            hasManyFields: [],
+            belongsToManyFields: [],
+            hasCreatedAt: false,
+            hasUpdatedAt: false,
+            hasDeletedAt: false,
+          });
+        }
       } else {
         // Link invertible hasMany/belongsTo relations
         const inversedRelation = transformed.models.reduce((found: RelationProperties | null, model) => {

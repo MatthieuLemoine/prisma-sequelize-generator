@@ -74,9 +74,13 @@ model Charity {
   name String
   charitiesSelections CharitiesSelection[]
   sustainableDevelopmentGoals SustainableDevelopmentGoal[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model CharitiesSelection {
   charitiesSelectionId  String   @id @default(uuid())
   charities Charity[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

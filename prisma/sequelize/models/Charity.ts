@@ -43,14 +43,15 @@ export class Charity extends Model {
         sequelize,
         modelName: 'Charity',
         tableName: 'Charity',
-        timestamps: false,
+        timestamps: true,
       }
     );
   }
 
   static associate(models: Record<string, ModelCtor<Model>>) {
     this.belongsToMany(models.CharitiesSelection, {
-      through: '_CharitiesSelectionToCharity',
+      through: models._CharitiesSelectionToCharity,
+      foreignKey: 'B',
     });
   }
 }
