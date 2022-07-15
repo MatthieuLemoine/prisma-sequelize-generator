@@ -37,7 +37,7 @@ export class {{modelName}} extends Model {
     this.hasMany(models.{{name}}, { as: '{{as}}', sourceKey: '{{sourceKey}}', foreignKey: '{{foreignKey}}' });
   {{/each}}
   {{#each hasOneFields}}
-    this.hasOne(models.{{name}}, { as: '{{as}}' });
+    this.hasOne(models.{{name}}, { as: '{{as}}', foreignKey: '{{foreignKey}}' });
   {{/each}}
   {{#each belongsToManyFields}}
     this.belongsToMany(models.{{name}}, { through: models.{{through}}, foreignKey: '{{foreignKey}}' });

@@ -159,6 +159,9 @@ export function transformDMMF(dmmf: DMMF.Document) {
       }
       index++;
     }
+    for (const hasOneField of model.hasOneFields) {
+      hasOneField.foreignKey = model.scalarFields.find((f) => f.isId)?.fieldName || '';
+    }
     modelIndex++;
   }
   for (const relationToRemove of hasManyRelationsToRemove) {

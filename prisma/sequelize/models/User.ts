@@ -71,6 +71,6 @@ export class User extends Model {
       sourceKey: 'id',
       foreignKey: 'userId',
     });
-    this.hasOne(models.User, { as: 'predecessor' });
+    this.hasOne(models.User, { as: 'predecessor', foreignKey: 'id' });
   }
 }

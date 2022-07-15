@@ -44,6 +44,9 @@ model Access {
   accessId    String   @id @default(uuid())
   name        String
   description String
+
+  accessCredential AccessCredential?
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -81,6 +84,17 @@ model Charity {
 model CharitiesSelection {
   charitiesSelectionId  String   @id @default(uuid())
   charities Charity[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AccessCredential {
+  accessCredentialId String   @id @default(uuid())
+
+  password String
+  access Access @relation(fields: [accessId], references: [accessId])
+  accessId String @unique
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

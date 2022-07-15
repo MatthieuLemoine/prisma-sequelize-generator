@@ -1,36 +1,38 @@
 import { Sequelize, Model, DataTypes, ModelCtor } from 'sequelize';
 
-export class Access extends Model {
+export class AccessCredential extends Model {
   static initialize(sequelize: Sequelize) {
     this.init(
       {
-        accessId: {
+        accessCredentialId: {
           type: DataTypes.STRING,
           allowNull: false,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
         },
-        name: {
+        password: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        description: {
+        accessId: {
           type: DataTypes.STRING,
           allowNull: false,
+          unique: true,
         },
       },
       {
         sequelize,
-        modelName: 'Access',
-        tableName: 'Access',
+        modelName: 'AccessCredential',
+        tableName: 'AccessCredential',
         timestamps: true,
       }
     );
   }
 
   static associate(models: Record<string, ModelCtor<Model>>) {
-    this.hasOne(models.AccessCredential, {
-      as: 'accessCredential',
+    this.belongsTo(models.Access, {
+      as: 'access',
+      targetKey: 'accessId',
       foreignKey: 'accessId',
     });
   }
